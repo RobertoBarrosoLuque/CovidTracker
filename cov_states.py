@@ -11,6 +11,10 @@ us_states[us_states.NAME=="Alaska"].scale(xfact=.5, yfact=.5)
 daily_cases = api_req.get_daily_cases()
 cumsum_cases_2day = daily_cases[daily_cases["dateChecked"] == max(daily_cases.dateChecked)]
 
+doctors_df = api_req.get_num_doctors()
+
 cumsum_states = us_states[["STUSPS", "NAME", "geometry"]].merge(cumsum_cases_2day[["state","positive"]], left_on='STUSPS', right_on='state')
 
-gv.Polygons(cumsum_states, vdims=['positive','NAME']).opts(colorbar=True, cmap='PiYG',width=800, height=400, tools=['hover'], infer_projection=True)
+cumsum_states = cumsum_states.merge(doctors_df, left_on="NAME", right_on="State")[["State", "geometry","positive", "doc_per_thousand"]]
+
+ 
