@@ -28,24 +28,24 @@ def get_num_doctors():
     Returns: 
       main_df: pandas dataframe
     '''
-        file = "Primary_Care_Physicians_by_US_State_by_State_2013.xlsx"
-        doctors = pd.read_excel("C:/Users/robal/Dropbox/U Chicago/CovidProject/Data/" + file, sheet_name='Data For Current Chart')
+    file = "Primary_Care_Physicians_by_US_State_by_State_2013.xlsx"
+    doctors = pd.read_excel("C:/Users/robal/Dropbox/U Chicago/CovidProject/Data/" + file, sheet_name='Data For Current Chart')
 
-        pop_req = requests.get("https://api.census.gov/data/2019/pep/population?get=POP,NAME&for=state:*")
-        pop_df = pd.DataFrame(pop_req.json()[1:])
-        pop_df.columns = ["Population", "State_name", "State_num"]
+    pop_req = requests.get("https://api.census.gov/data/2019/pep/population?get=POP,NAME&for=state:*")
+    pop_df = pd.DataFrame(pop_req.json()[1:])
+    pop_df.columns = ["Population", "State_name", "State_num"]
 
-        main_df = pop_df.merge(doctors, left_on="State_name", 
-                               right_on="State")[["Population",
-                               "Main Value","State"]]
-        main_df.columns = ["Population", "Num_doctors", "State"]
-        main_df = main_df.astype({'Population': 'int32', "Num_doctors": "int32", "State":"str"})
+    main_df = pop_df.merge(doctors, left_on="State_name", 
+                           right_on="State")[["Population",
+                           "Main Value","State"]]
+    main_df.columns = ["Population", "Num_doctors", "State"]
+    main_df = main_df.astype({'Population': 'int32',
+                              "Num_doctors":   "int32", "State":"str"})
 
-        main_df["doc_per_thousand"] = main_df.apply(lambda row: 
-                                                    row.Num_doctors/row.Population
-                                                    *100000, axis = 1)
-
-        return main_df
+    main_df["doc_per_thousand"] = main_df.apply(lambda row: 
+                                                row.Num_doctors/row.Population
+                                                *100000, axis = 1)
+    return main_df
 
 
 
