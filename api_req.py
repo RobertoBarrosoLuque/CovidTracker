@@ -19,7 +19,3 @@ def get_daily_cases():
                                                     datetime.strptime(str(row),
                                                     '%Y%m%d'))
     return daily_cases
-
-#sns.relplot(x="date", y="positive", hue="state", 
-#           kind="line", legend=False,data=daily_cases)
- 

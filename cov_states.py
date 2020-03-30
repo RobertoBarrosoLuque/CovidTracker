@@ -7,7 +7,6 @@ shape_folder = 'C:/Users/robal/Dropbox/U Chicago/CovidProject/ShapeFiles/'
 us_states = geopandas.read_file(shape_folder + "tl_2017_us_state.shp")
 us_states = us_states[us_states["DIVISION"] != '0']
 us_states[us_states.NAME=="Alaska"].scale(xfact=.5, yfact=.5)
-
 #positive = total cummulative official cases 
 daily_cases = api_req.get_daily_cases()
 cumsum_cases_2day = daily_cases[daily_cases["dateChecked"] == max(daily_cases.dateChecked)]
