@@ -18,3 +18,4 @@ cumsum_states = us_states[["STUSPS", "NAME", "geometry"]].merge(cumsum_cases_2da
 cumsum_states = cumsum_states.merge(doctors_df, left_on="NAME", right_on="State")[["State", "geometry","positive", "doc_per_thousand"]]
 
 gv.Polygons(cumsum_states, vdims=['positive',"doc_per_thousand",'State']).opts(colorbar=True, cmap='PiYG',width=400, height=200,xlim=(-130, -65), ylim=(20,70), tools=['hover'])
+ 
